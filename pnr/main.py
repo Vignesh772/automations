@@ -3,7 +3,7 @@ import json
 import re
 import sms
 if __name__ == "__main__":
-    URL = "https://www.confirmtkt.com/pnr-status/2160975913"
+    URL = "https://www.confirmtkt.com/pnr-status/<your_pnr>"
     resp = requests.get(URL, verify =False)
     print(resp.status_code)
     s = resp.text

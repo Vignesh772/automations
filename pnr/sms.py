@@ -13,7 +13,7 @@ def send_sms(message):
             "route": "q",
             "variables_values": message,
             "sender_id":"TXTIND",
-            "numbers": "9910776747"}
+            "numbers": "<your_10_digit_mobile_numer>"}
 
     headers = {
             'cache-control': "no-cache"
