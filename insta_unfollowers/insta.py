@@ -70,5 +70,8 @@ if __name__ == "__main__:
     for i in list(bad_people):
         message=message + ' ' + i
     print(message)
-
-    sms.send_sms("{} unfollowed you!".format(message))
+    if len(bad_people) !=0:
+        sms.send_sms("{} unfollowed you!".format(message))
+    else:
+        sms.send_sms("No one unfollowed you!")
+        
