@@ -15,8 +15,8 @@ import random
 
 
 
-USERNAME="automation_checker1"
-PASSWORD=r'automation_checker123456'
+USERNAME=""
+PASSWORD=r''
 users = set()
 pre_count =0
 count =0
