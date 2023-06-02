@@ -156,8 +156,7 @@ class MainWindow(PageWindow):
     def __init__(self):
         
         super().__init__()
-        self.x=0
-        self.y=0
+        
         self.btn=[]
         self.initUI()
     #def retreive_user_account(self):
@@ -179,23 +178,39 @@ class MainWindow(PageWindow):
 
         self.scroll = QtWidgets.QScrollArea()             # Scroll Area which contains the widgets, set as the centralWidget
         self.widget = QtWidgets.QWidget()                 # Widget that contains the collection of Vertical Box
-        self.grid = QtWidgets.QGridLayout()               # The Vertical Box that contains the Horizontal Boxes of  labels and buttons
+        self.grid = QtWidgets.QGridLayout()  
+        self.grid.setSpacing(40)                               # The Vertical Box that contains the Horizontal Boxes of  labels and buttons
         self.grid.addWidget(self.add_user_btn, 0, 0, 1, 4, QtCore.Qt.AlignLeft)
         self.result = rtr.retrieveEntries()
-
+        #self.result = [(str(a),str(a)) for a in range(50)]
+        x=0
         for c in range(len(self.result)):
             self.btn.append( QtWidgets.QPushButton('New Button', self))
             
             self.btn[-1].setText(self.result[c][0])
             self.btn[-1].clicked.connect(partial(self.login_valorant, self.result[c]))
+
             
 
 
             i = self.grid.count()  -1  # Subtract 1 for add_btn
-            self.grid.addWidget(self.btn[-1], 1 + i // 4, i % 4) # Add 1 to row since add_btn is on first row
+            # if i%2==0:
+            #     x=(1+i//2)
+            # else:
+            #     x=(1+i//2) + 3
+
+            # print(x)
+            if i%2 == 0:
+                x+=2
+            print(x, i)
+            if i%2==0:
+                y=(i%2)
+            else:
+                y=(i % 2)+1
+            self.grid.addWidget(self.btn[-1], x, y, 2 ,2) # Add 1 to row since add_btn is on first row
+            
 
 
-            #self.vbox.addWidget(self.btn[-1])
 
         self.widget.setLayout(self.grid)
 
@@ -207,16 +222,10 @@ class MainWindow(PageWindow):
 
         self.setCentralWidget(self.scroll)
 
-        #self.setGeometry(600, 100, 1000, 900)
         self.show()
 
 
-        # self.add_user_btn = QtWidgets.QPushButton('Add New User', self)
-        # self.add_user_btn.clicked.connect(self.go_to_add)
-
-        # self.add_btn = QtWidgets.QPushButton('Add',self)
-        # self.add_btn.clicked.connect(self.add_button)
-
+        
        
     def login_valorant(self, creds):
 
