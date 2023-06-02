@@ -49,7 +49,7 @@ def addEntry(username, password):
 	
 	creds = get_secret_creds()
 	mp = creds[0]
-	ds = creds[0]
+	ds = creds[1]
 
 	# compute master key
 	mk = computeMasterKey(mp,ds)
@@ -63,6 +63,7 @@ def addEntry(username, password):
 	query = "INSERT INTO entries (username, password) values ('{}', '{}')".format(username, encrypted)
 	cursor.execute(query)
 	db.commit()
+	db.close()
 
 
 	return True

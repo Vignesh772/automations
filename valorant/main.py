@@ -4,6 +4,9 @@ import utils
 import config
 import hashlib
 from utils import add as ad
+from utils import retrieve as rtr
+from functools import partial
+import sqlite3
 
 class PageWindow(QtWidgets.QMainWindow):
     gotoSignal = QtCore.pyqtSignal(str)
@@ -62,7 +65,7 @@ class LoginWindow(PageWindow):
     def check_password(self):
         password = self.lineEdit.text()
         hashed_password = hashlib.sha256(password.encode()).hexdigest()
-        db = utils.dbconfig.dbconfig()
+        db = sqlite3.connect('C:\\Users\\V Vignesh\\Documents\\GitHub\\automations\\valorant\\test.db')
         cursor = db.cursor()
         query = "SELECT * FROM secrets"
         cursor.execute(query)
@@ -141,14 +144,90 @@ class ConfigureWindow(PageWindow):
             return
         config.make(self.lineEdit.text())
 
+
         
 
 
 
         self.goto("main")
 
-
 class MainWindow(PageWindow):
+    
+    def __init__(self):
+        
+        super().__init__()
+        self.x=0
+        self.y=0
+        self.btn=[]
+        self.initUI()
+    #def retreive_user_account(self):
+
+
+    def go_to_add(self):
+        self.goto("add")
+    def initUI(self):
+
+        self.setWindowTitle("Valorant Launcher")
+        self.UiComponents()
+    def UiComponents(self):
+        self.result = rtr.retrieveEntries()
+        
+
+        self.add_user_btn = QtWidgets.QPushButton('Add New User', self)
+        self.add_user_btn.clicked.connect(self.go_to_add)
+
+
+        self.scroll = QtWidgets.QScrollArea()             # Scroll Area which contains the widgets, set as the centralWidget
+        self.widget = QtWidgets.QWidget()                 # Widget that contains the collection of Vertical Box
+        self.grid = QtWidgets.QGridLayout()               # The Vertical Box that contains the Horizontal Boxes of  labels and buttons
+        self.grid.addWidget(self.add_user_btn, 0, 0, 1, 4, QtCore.Qt.AlignLeft)
+        self.result = rtr.retrieveEntries()
+
+        for c in range(len(self.result)):
+            self.btn.append( QtWidgets.QPushButton('New Button', self))
+            
+            self.btn[-1].setText(self.result[c][0])
+            self.btn[-1].clicked.connect(partial(self.login_valorant, self.result[c]))
+            
+
+
+            i = self.grid.count()  -1  # Subtract 1 for add_btn
+            self.grid.addWidget(self.btn[-1], 1 + i // 4, i % 4) # Add 1 to row since add_btn is on first row
+
+
+            #self.vbox.addWidget(self.btn[-1])
+
+        self.widget.setLayout(self.grid)
+
+        #Scroll Area Properties
+        self.scroll.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOn)
+        self.scroll.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
+        self.scroll.setWidgetResizable(True)
+        self.scroll.setWidget(self.widget)
+
+        self.setCentralWidget(self.scroll)
+
+        #self.setGeometry(600, 100, 1000, 900)
+        self.show()
+
+
+        # self.add_user_btn = QtWidgets.QPushButton('Add New User', self)
+        # self.add_user_btn.clicked.connect(self.go_to_add)
+
+        # self.add_btn = QtWidgets.QPushButton('Add',self)
+        # self.add_btn.clicked.connect(self.add_button)
+
+       
+    def login_valorant(self, creds):
+
+        print(creds)
+   
+        
+
+
+
+
+class AddNewUser(PageWindow):
     def __init__(self):
         super().__init__()
         self.initUI()
@@ -172,7 +251,8 @@ class MainWindow(PageWindow):
             return
 
 
-
+    def go_back(self):
+        self.goto("main")
     def disableButton(self):
         if len(self.lineEdit.text()) and len(self.lineEdit_2.text()) and len(self.lineEdit_1.text()) :
             self.pushButton.setEnabled(True)
@@ -203,6 +283,12 @@ class MainWindow(PageWindow):
         self.pushButton.setObjectName("pushButton")
         self.pushButton.setText("Add")
         self.pushButton.setEnabled(False)
+
+        self.pushButton_1 = QtWidgets.QPushButton(self)
+        self.pushButton_1.setGeometry(QtCore.QRect(210, 280, 93, 28))
+        self.pushButton_1.setObjectName("pushButton")
+        self.pushButton_1.setText("Back")
+        self.pushButton_1.setEnabled(True)
 
         self.label = QtWidgets.QLabel(self)
         self.label.setGeometry(QtCore.QRect(40, 150, 170, 20))
@@ -240,6 +326,7 @@ class MainWindow(PageWindow):
         
 
         self.pushButton.clicked.connect(self.add_entry)
+        self.pushButton_1.clicked.connect(self.go_back)
 
       
        
@@ -264,6 +351,7 @@ class Window(QtWidgets.QMainWindow):
         else:
             self.register(LoginWindow(), "login")
 
+        self.register(AddNewUser(), "add")
         self.register(MainWindow(), "main")
         if self.f:
             self.goto("configure")
@@ -281,6 +369,8 @@ class Window(QtWidgets.QMainWindow):
     def goto(self, name):
         if name in self.m_pages:
             widget = self.m_pages[name]
+            if name=="main":
+                widget.UiComponents()
             self.stacked_widget.setCurrentWidget(widget)
             self.setWindowTitle(widget.windowTitle())
 
