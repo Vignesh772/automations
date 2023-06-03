@@ -8,6 +8,9 @@ from utils import retrieve as rtr
 from functools import partial
 import sqlite3
 import random 
+import time
+import subprocess
+import win32com.client as com
 from utils import dbconfig as dbc
 class PageWindow(QtWidgets.QMainWindow):
     gotoSignal = QtCore.pyqtSignal(str)
@@ -386,8 +389,31 @@ class MainWindow(PageWindow):
     def login_valorant(self, creds):
 
         print(creds)
-   
+        username = creds[0]
+        password = creds[1]
+        riot_client_path = r"C:\Riot Games\Riot Client\RiotClientServices.exe"
+        app_window_title = "Riot Client Main"
+
+        # Start Riot Client
+        subprocess.Popen(r'""' + riot_client_path + '""')
+
+        # Wait for Riot Client window to become active
+        while True:
+            shell = com.Dispatch("WScript.Shell")
+            shell.AppActivate(app_window_title)
+            if shell.AppActivate(app_window_title):
+                break
+            time.sleep(1)
+
+        # Send username and password
+        shell.SendKeys(username)
+        shell.SendKeys("{TAB}")
+        shell.SendKeys(password)
+        shell.SendKeys("{ENTER}")
+
         
+           
+                
 
 
 
