@@ -1,6 +1,6 @@
-import mysql.connector
 
 import sqlite3
+import os
 def dbconfig():
   try:
     # db = mysql.connector.connect(
@@ -8,7 +8,11 @@ def dbconfig():
     #   user ="pm",
     #   passwd ="password"
     # )
-    db = sqlite3.connect('test.db')
+    try:
+      os.mkdir("C:\\RiotLaucher")
+    except Exception as e:
+      pass
+    db = sqlite3.connect('C:\\RiotLaucher\\database.db')
     
     # printc("[green][+][/green] Connected to db")
   except Exception as e:

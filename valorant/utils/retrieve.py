@@ -5,10 +5,9 @@ from Crypto.Hash import SHA512
 from Crypto.Random import get_random_bytes
 import base64
 import sqlite3
-
+from utils.dbconfig import dbconfig
 
 def computeMasterKey(db):
-	#db = sqlite3.connect('C:\\Users\\V Vignesh\\Documents\\GitHub\\automations\\valorant\\test.db')
 	cursor = db.cursor()
 	query = "SELECT * FROM secrets"
 	cursor.execute(query)
@@ -21,7 +20,7 @@ def computeMasterKey(db):
 
 def retrieveEntries():
 	user_pass_list = []
-	db = sqlite3.connect('C:\\Users\\V Vignesh\\Documents\\GitHub\\automations\\valorant\\test.db')
+	db = dbconfig()
 	cursor = db.cursor()
 
 	query = "SELECT * FROM entries"

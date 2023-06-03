@@ -8,6 +8,7 @@ from utils import retrieve as rtr
 from functools import partial
 import sqlite3
 import random 
+from utils import dbconfig as dbc
 class PageWindow(QtWidgets.QMainWindow):
     gotoSignal = QtCore.pyqtSignal(str)
 
@@ -120,7 +121,7 @@ class LoginWindow(PageWindow):
     def check_password(self):
         password = self.lineEdit.text()
         hashed_password = hashlib.sha256(password.encode()).hexdigest()
-        db = sqlite3.connect('C:\\Users\\V Vignesh\\Documents\\GitHub\\automations\\valorant\\test.db')
+        db = dbc.dbconfig()
         cursor = db.cursor()
         query = "SELECT * FROM secrets"
         cursor.execute(query)

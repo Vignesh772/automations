@@ -6,10 +6,11 @@ from Crypto.Hash import SHA512
 from Crypto.Random import get_random_bytes
 import base64
 import sqlite3
+from utils.dbconfig import dbconfig
 def get_secret_creds():
 
     
-    db = sqlite3.connect('C:\\Users\\V Vignesh\\Documents\\GitHub\\automations\\valorant\\test.db')
+    db = dbconfig()
     cursor = db.cursor()
     query = "SELECT * FROM secrets"
     cursor.execute(query)
@@ -25,7 +26,7 @@ def computeMasterKey(mp,ds):
 
 
 def checkEntry(username):
-	db = sqlite3.connect('C:\\Users\\V Vignesh\\Documents\\GitHub\\automations\\valorant\\test.db')
+	db = dbconfig()
 	cursor = db.cursor()
 	query = "SELECT * FROM entries WHERE username = '{}'".format(username)
 	cursor.execute(query)
@@ -58,7 +59,7 @@ def addEntry(username, password):
 	encrypted = utils.aesutil.encrypt(key=mk, source=password, keyType="bytes")
 
 	# Add to db
-	db = sqlite3.connect('C:\\Users\\V Vignesh\\Documents\\GitHub\\automations\\valorant\\test.db')
+	db = dbconfig()
 	cursor = db.cursor()
 	query = "INSERT INTO entries (username, password) values ('{}', '{}')".format(username, encrypted)
 	cursor.execute(query)
