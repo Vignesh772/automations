@@ -7,7 +7,7 @@ from utils import add as ad
 from utils import retrieve as rtr
 from functools import partial
 import sqlite3
-
+import random 
 class PageWindow(QtWidgets.QMainWindow):
     gotoSignal = QtCore.pyqtSignal(str)
 
@@ -25,27 +25,82 @@ class LoginWindow(PageWindow):
     def UiComponents(self):
        
         self.lineEdit = QtWidgets.QLineEdit(self)
-        self.lineEdit.setGeometry(QtCore.QRect(200, 150, 281, 22))
+        self.lineEdit.setGeometry(QtCore.QRect(140, 180, 360, 60))
         self.lineEdit.setText("")
         self.lineEdit.setObjectName("lineEdit")
         self.lineEdit.textChanged.connect(self.disableButton)
+        palette = QtGui.QPalette()
+        palette.setColor(QtGui.QPalette.Text, QtCore.Qt.white)
+        self.lineEdit.setPalette(palette)
+        font = QtGui.QFont("Epilogue")
+        font.setPointSize(12)
+        font.setWeight(900)
+        self.lineEdit.setFont(font)
+        self.lineEdit.setPlaceholderText(" MASTER PASSWORD") 
+
+
 
         self.pushButton = QtWidgets.QPushButton(self)
-        self.pushButton.setGeometry(QtCore.QRect(210, 250, 93, 28))
+        self.pushButton.setGeometry(QtCore.QRect(140, 260, 360, 60))
         self.pushButton.setObjectName("pushButton")
-        self.pushButton.setText("Log In")
+        self.pushButton.setText("    PROCEED")
+        
+        font = QtGui.QFont("Impact")
+        font.setPointSize(12)
+        font.setWeight(400)
+        self.pushButton.setFont(font)
+        self.pushButton.setStyleSheet("position: absolute;\n"
+
+"/* Primary red */\n"
+"\n"
+"background: #FF4656;\n"
+"border-radius: 4px; \n"
+"color: #FFFFFF;\n"
+"letter-spacing: 0.2em;\n"
+"text-align: left;\n"
+)
         self.pushButton.setEnabled(False)
 
-        self.label = QtWidgets.QLabel(self)
-        self.label.setGeometry(QtCore.QRect(60, 150, 111, 20))
-        self.label.setObjectName("label")
-        self.label.setText("Enter Master Key : ")
+        # self.label = QtWidgets.QLabel(self)
+        # self.label.setGeometry(QtCore.QRect(60, 150, 111, 20))
+        # self.label.setObjectName("label")
+        # self.label.setText("Enter Master Key : ")
 
 
         self.label_3 = QtWidgets.QLabel(self)
-        self.label_3.setGeometry(QtCore.QRect(250, 50, 171, 16))
+        self.label_3.setGeometry(QtCore.QRect(140, 80, 150, 50))
         self.label_3.setObjectName("label_3")
-        self.label_3.setText("Log In")
+        self.label_3.setText("LOG IN")
+        self.label_3.setStyleSheet("position: absolute;\n"
+"font-family: \'Impact\';\n"
+"font-style: normal;\n"
+"font-weight: 400;\n"
+"font-size: 48px;\n"
+"line-height: 59px;\n"
+"/* identical to box height */\n"
+"\n"
+"\n"
+"color: #FFFFFF;\n"
+"")
+
+
+        self.label_4 = QtWidgets.QLabel(self)
+        self.label_4.setGeometry(QtCore.QRect(140, 135, 360, 20))
+        self.label_4.setObjectName("label_4")
+        self.label_4.setText("Use your Master Password to continue")
+        self.label_4.setStyleSheet("position: absolute;\n"
+"font-family: \'Epilogue\';\n"
+"font-style: normal;\n"
+"font-weight: 800;\n"
+"font-size: 14px;\n"
+"line-height: 14px;\n"
+"/* identical to box height */\n"
+"\n"
+"\n"
+"color: #C7F459;\n"
+"")
+
+
 
         self.msg = QtWidgets.QMessageBox()
         self.msg.setIcon(QtWidgets.QMessageBox.Critical)
@@ -88,39 +143,93 @@ class ConfigureWindow(PageWindow):
         self.UiComponents()
 
     def UiComponents(self):
+        palette = QtGui.QPalette()
+        palette.setColor(QtGui.QPalette.Text, QtCore.Qt.white)
+        font = QtGui.QFont("Epilogue")
+        font.setPointSize(12)
+        font.setWeight(900)
+
        
         self.lineEdit = QtWidgets.QLineEdit(self)
-        self.lineEdit.setGeometry(QtCore.QRect(200, 150, 281, 22))
+        self.lineEdit.setGeometry(QtCore.QRect(140, 180, 360, 60))
         self.lineEdit.setText("")
         self.lineEdit.setObjectName("lineEdit")
+        self.lineEdit.setPalette(palette)
+        self.lineEdit.setFont(font)
+        self.lineEdit.setPlaceholderText(" MASTER PASSWORD") 
         self.lineEdit.textChanged.connect(self.disableButton)
 
-        self.pushButton = QtWidgets.QPushButton(self)
-        self.pushButton.setGeometry(QtCore.QRect(210, 250, 93, 28))
-        self.pushButton.setObjectName("pushButton")
-        self.pushButton.setText("Submit")
-        self.pushButton.setEnabled(False)
-
-        self.label = QtWidgets.QLabel(self)
-        self.label.setGeometry(QtCore.QRect(60, 150, 111, 20))
-        self.label.setObjectName("label")
-        self.label.setText("Enter Master Key : ")
-
         self.lineEdit_2 = QtWidgets.QLineEdit(self)
-        self.lineEdit_2.setGeometry(QtCore.QRect(200, 200, 281, 22))
+        self.lineEdit_2.setGeometry(QtCore.QRect(140, 260, 360, 60))
         self.lineEdit_2.setText("")
         self.lineEdit_2.setObjectName("lineEdit_2")
+        self.lineEdit_2.setPalette(palette)
+        self.lineEdit_2.setFont(font)
+        self.lineEdit_2.setPlaceholderText(" RE-ENTER MASTER PASSWORD") 
         self.lineEdit_2.textChanged.connect(self.disableButton)
 
-        self.label_2 = QtWidgets.QLabel(self)
-        self.label_2.setGeometry(QtCore.QRect(50, 200, 131, 20))
-        self.label_2.setObjectName("label_2")
-        self.label_2.setText("Re Enter Master Key : ")
+
+        self.pushButton = QtWidgets.QPushButton(self)
+        self.pushButton.setGeometry(QtCore.QRect(140, 340, 360, 60))
+        self.pushButton.setObjectName("pushButton")
+        self.pushButton.setText("    PROCEED")
+        btn_font = QtGui.QFont("Impact")
+        btn_font.setPointSize(12)
+        btn_font.setWeight(400)
+        self.pushButton.setFont(btn_font)
+        self.pushButton.setStyleSheet("position: absolute;\n"
+
+"/* Primary red */\n"
+"\n"
+"background: #FF4656;\n"
+"border-radius: 4px; \n"
+"color: #FFFFFF;\n"
+"letter-spacing: 0.2em;\n"
+"text-align: left;\n"
+)
+
+        self.pushButton.setEnabled(False)
+
+
+
+        
+
 
         self.label_3 = QtWidgets.QLabel(self)
-        self.label_3.setGeometry(QtCore.QRect(250, 50, 171, 16))
+        self.label_3.setGeometry(QtCore.QRect(140, 80, 250, 50))
         self.label_3.setObjectName("label_3")
-        self.label_3.setText("Sing UP")
+        self.label_3.setText("REGISTER")
+        self.label_3.setStyleSheet("position: absolute;\n"
+"font-family: \'Impact\';\n"
+"font-style: normal;\n"
+"font-weight: 400;\n"
+"font-size: 48px;\n"
+"line-height: 59px;\n"
+"/* identical to box height */\n"
+"\n"
+"\n"
+"color: #FFFFFF;\n"
+"")
+
+
+        self.label_4 = QtWidgets.QLabel(self)
+        self.label_4.setGeometry(QtCore.QRect(140, 135, 440, 20))
+        self.label_4.setObjectName("label_4")
+        self.label_4.setText("Set Master Password, the only password you need to remeber")
+        self.label_4.setStyleSheet("position: absolute;\n"
+"font-family: \'Epilogue\';\n"
+"font-style: normal;\n"
+"font-weight: 800;\n"
+"font-size: 14px;\n"
+"line-height: 14px;\n"
+"/* identical to box height */\n"
+"\n"
+"\n"
+"color: #C7F459;\n"
+"")
+
+
+
 
         self.msg = QtWidgets.QMessageBox()
         self.msg.setIcon(QtWidgets.QMessageBox.Critical)
@@ -159,6 +268,7 @@ class MainWindow(PageWindow):
         
         self.btn=[]
         self.initUI()
+
     #def retreive_user_account(self):
 
 
@@ -169,46 +279,91 @@ class MainWindow(PageWindow):
         self.setWindowTitle("Valorant Launcher")
         self.UiComponents()
     def UiComponents(self):
-        self.result = rtr.retrieveEntries()
+        if config.checkConfig():
+            self.result = rtr.retrieveEntries()
+        else:
+            self.result=[]
         
+        self.label = QtWidgets.QLabel(self)
+        self.label.setFixedSize(290, 20)
+        self.label.setObjectName("label")
+        self.label.setText("Click on the user to login into Valorant.")
+        self.label.setStyleSheet("position: absolute;\n"
+"font-family: \'Epilogue\';\n"
+"font-style: normal;\n"
+"font-weight: 800;\n"
+"font-size: 14px;\n"
+"line-height: 14px;\n"
+"/* identical to box height */\n"
+"\n"
+"\n"
+"color: #C7F459;\n"
+"")
 
-        self.add_user_btn = QtWidgets.QPushButton('Add New User', self)
+
+
+        self.add_user_btn = QtWidgets.QPushButton('    ADD NEW USER    ', self)
         self.add_user_btn.clicked.connect(self.go_to_add)
+        self.add_user_btn.setFixedSize( 290, 60)
+        btn_font = QtGui.QFont("Impact")
+        btn_font.setPointSize(12)
+        btn_font.setWeight(400)
+        self.add_user_btn.setFont(btn_font)
+        self.add_user_btn.setStyleSheet("position: absolute;\n"
+
+"/* Primary red */\n"
+"\n"
+"background: #FF4656;\n"
+"border-radius: 4px; \n"
+"color: #FFFFFF;\n"
+"letter-spacing: 0.2em;\n"
+"text-align: left;\n"
+)
 
 
         self.scroll = QtWidgets.QScrollArea()             # Scroll Area which contains the widgets, set as the centralWidget
         self.widget = QtWidgets.QWidget()                 # Widget that contains the collection of Vertical Box
         self.grid = QtWidgets.QGridLayout()  
-        self.grid.setSpacing(40)                               # The Vertical Box that contains the Horizontal Boxes of  labels and buttons
-        self.grid.addWidget(self.add_user_btn, 0, 0, 1, 4, QtCore.Qt.AlignLeft)
-        self.result = rtr.retrieveEntries()
+        #self.grid.setSpacing(40)                               # The Vertical Box that contains the Horizontal Boxes of  labels and buttons
+        self.grid.addWidget(self.add_user_btn, 0, 0, 2, 2, QtCore.Qt.AlignTop)
+        self.grid.addWidget(self.label,2, 0, 2, 2)
+
+
         #self.result = [(str(a),str(a)) for a in range(50)]
-        x=0
+        x=2
         for c in range(len(self.result)):
             self.btn.append( QtWidgets.QPushButton('New Button', self))
             
             self.btn[-1].setText(self.result[c][0])
+            self.btn[-1].setFont(btn_font)
+            self.btn[-1].setFixedSize(290,120)
+            self.btn[-1].setStyleSheet("position: absolute;\n"
+
+    "/* Primary red */\n"
+    "\n"
+    "background: #FF4656;\n"
+    "border-radius: 4px; \n"
+    "color: #FFFFFF;\n"
+    "letter-spacing: 0.2em;\n"
+    "text-align: center;\n"
+    )
+
+
             self.btn[-1].clicked.connect(partial(self.login_valorant, self.result[c]))
 
             
 
 
-            i = self.grid.count()  -1  # Subtract 1 for add_btn
-            # if i%2==0:
-            #     x=(1+i//2)
-            # else:
-            #     x=(1+i//2) + 3
-
-            # print(x)
+            i = self.grid.count()     # Subtract 1 for add_btn
+            
             if i%2 == 0:
                 x+=2
-            print(x, i)
+            
             if i%2==0:
                 y=(i%2)
             else:
                 y=(i % 2)+1
-            self.grid.addWidget(self.btn[-1], x, y, 2 ,2) # Add 1 to row since add_btn is on first row
-            
+            self.grid.addWidget(self.btn[-1], x, y, 2,2) # Add 1 to row since add_btn is on first row
 
 
 
@@ -267,59 +422,118 @@ class AddNewUser(PageWindow):
             self.pushButton.setEnabled(True)
 
     def UiComponents(self):
+        palette = QtGui.QPalette()
+        palette.setColor(QtGui.QPalette.Text, QtCore.Qt.white)
+        font = QtGui.QFont("Epilogue")
+        font.setPointSize(12)
+        font.setWeight(900)
 
         self.lineEdit_1 = QtWidgets.QLineEdit(self)
-        self.lineEdit_1.setGeometry(QtCore.QRect(250, 100, 281, 22))
+        self.lineEdit_1.setGeometry(QtCore.QRect(140, 170, 360, 40))
         self.lineEdit_1.setText("")
         self.lineEdit_1.setObjectName("lineEdit")
         self.lineEdit_1.textChanged.connect(self.disableButton)
+        self.lineEdit_1.setPalette(palette)
+        self.lineEdit_1.setFont(font)
+        self.lineEdit_1.setPlaceholderText(" USER NAME") 
+
 
         self.lineEdit = QtWidgets.QLineEdit(self)
-        self.lineEdit.setGeometry(QtCore.QRect(250, 150, 281, 20))
+        self.lineEdit.setGeometry(QtCore.QRect(140, 230, 360, 40))
         self.lineEdit.setText("")
         self.lineEdit.setObjectName("lineEdit")
         self.lineEdit.textChanged.connect(self.disableButton)
+        self.lineEdit.setPalette(palette)
+        self.lineEdit.setFont(font)
+        self.lineEdit.setPlaceholderText(" PASSWORD") 
 
         
         self.lineEdit_2 = QtWidgets.QLineEdit(self)
-        self.lineEdit_2.setGeometry(QtCore.QRect(250, 200, 281, 22))
+        self.lineEdit_2.setGeometry(QtCore.QRect(140, 290, 360, 40))
         self.lineEdit_2.setText("")
         self.lineEdit_2.setObjectName("lineEdit_2")
         self.lineEdit_2.textChanged.connect(self.disableButton)
+        self.lineEdit_2.setPalette(palette)
+        self.lineEdit_2.setFont(font)
+        self.lineEdit_2.setPlaceholderText(" RE ENTER PASSWORD") 
 
         self.pushButton = QtWidgets.QPushButton(self)
-        self.pushButton.setGeometry(QtCore.QRect(210, 250, 93, 28))
+        self.pushButton.setGeometry(QtCore.QRect(140, 350, 360, 40))
         self.pushButton.setObjectName("pushButton")
-        self.pushButton.setText("Add")
+        self.pushButton.setText("    ADD")
+        
+        btn_font = QtGui.QFont("Impact")
+        btn_font.setPointSize(12)
+        btn_font.setWeight(400)
+        self.pushButton.setFont(btn_font)
+
+        self.pushButton.setStyleSheet("position: absolute;\n"
+
+"/* Primary red */\n"
+"\n"
+"background: #FF4656;\n"
+"border-radius: 4px; \n"
+"color: #FFFFFF;\n"
+"letter-spacing: 0.2em;\n"
+"text-align: left;\n"
+)
         self.pushButton.setEnabled(False)
 
+
         self.pushButton_1 = QtWidgets.QPushButton(self)
-        self.pushButton_1.setGeometry(QtCore.QRect(210, 280, 93, 28))
+        self.pushButton_1.setGeometry(QtCore.QRect(140, 410, 360, 40))
         self.pushButton_1.setObjectName("pushButton")
-        self.pushButton_1.setText("Back")
+        self.pushButton_1.setText("    BACK")
         self.pushButton_1.setEnabled(True)
+        btn_font = QtGui.QFont("Impact")
+        btn_font.setPointSize(12)
+        btn_font.setWeight(400)
+        self.pushButton_1.setFont(btn_font)
+        self.pushButton_1.setStyleSheet("position: absolute;\n"
 
+"/* Primary red */\n"
+"\n"
+"background: #FF4656;\n"
+"border-radius: 4px; \n"
+"color: #FFFFFF;\n"
+"letter-spacing: 0.2em;\n"
+"text-align: left;\n"
+)
+
+
+       
         self.label = QtWidgets.QLabel(self)
-        self.label.setGeometry(QtCore.QRect(40, 150, 170, 20))
-        self.label.setObjectName("label")
-        self.label.setText("Enter Valorant Password : ")
+        self.label.setGeometry(QtCore.QRect(140, 65, 360, 50))
+        self.label.setObjectName("label_3")
+        self.label.setText("ADD NEW ACCOUNT")
+        self.label.setStyleSheet("position: absolute;\n"
+"font-family: \'Impact\';\n"
+"font-style: normal;\n"
+"font-weight: 400;\n"
+"font-size: 48px;\n"
+"line-height: 59px;\n"
+"/* identical to box height */\n"
+"\n"
+"\n"
+"color: #FFFFFF;\n"
+"")
 
-        self.label_1 = QtWidgets.QLabel(self)
-        self.label_1.setGeometry(QtCore.QRect(40, 100, 170, 20))
-        self.label_1.setObjectName("label")
-        self.label_1.setText("Enter Valorant Username : ")
+        self.label_4 = QtWidgets.QLabel(self)
+        self.label_4.setGeometry(QtCore.QRect(140, 120, 360, 20))
+        self.label_4.setObjectName("label_4")
+        self.label_4.setText("Enter your Valorant Account Login Credentials")
+        self.label_4.setStyleSheet("position: absolute;\n"
+"font-family: \'Epilogue\';\n"
+"font-style: normal;\n"
+"font-weight: 800;\n"
+"font-size: 14px;\n"
+"line-height: 14px;\n"
+"/* identical to box height */\n"
+"\n"
+"\n"
+"color: #C7F459;\n"
+"")
 
-        
-
-        self.label_2 = QtWidgets.QLabel(self)
-        self.label_2.setGeometry(QtCore.QRect(40, 200, 170, 20))
-        self.label_2.setObjectName("label_2")
-        self.label_2.setText("Re Enter Valorant Password : ")
-
-        self.label_3 = QtWidgets.QLabel(self)
-        self.label_3.setGeometry(QtCore.QRect(250, 50, 171, 16))
-        self.label_3.setObjectName("label_3")
-        self.label_3.setText("Add new account")
 
         self.msg = QtWidgets.QMessageBox()
         self.msg.setIcon(QtWidgets.QMessageBox.Critical)
@@ -349,6 +563,7 @@ class Window(QtWidgets.QMainWindow):
         
         super().__init__(parent)
         self.setFixedSize(640, 480)
+        self.setStyleSheet("background: #0F1923;\n""")
 
         self.stacked_widget = QtWidgets.QStackedWidget()
         self.setCentralWidget(self.stacked_widget)
@@ -391,3 +606,4 @@ if __name__ == "__main__":
     w = Window()
     w.show()
     sys.exit(app.exec_())
+
