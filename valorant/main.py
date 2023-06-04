@@ -29,6 +29,8 @@ class LoginWindow(PageWindow):
     def UiComponents(self):
        
         self.lineEdit = QtWidgets.QLineEdit(self)
+        self.lineEdit.setEchoMode(QtWidgets.QLineEdit.Password)
+
         self.lineEdit.setGeometry(QtCore.QRect(140, 180, 360, 60))
         self.lineEdit.setText("")
         self.lineEdit.setObjectName("lineEdit")
@@ -155,6 +157,7 @@ class ConfigureWindow(PageWindow):
 
        
         self.lineEdit = QtWidgets.QLineEdit(self)
+        self.lineEdit.setEchoMode(QtWidgets.QLineEdit.Password)
         self.lineEdit.setGeometry(QtCore.QRect(140, 180, 360, 60))
         self.lineEdit.setText("")
         self.lineEdit.setObjectName("lineEdit")
@@ -164,6 +167,7 @@ class ConfigureWindow(PageWindow):
         self.lineEdit.textChanged.connect(self.disableButton)
 
         self.lineEdit_2 = QtWidgets.QLineEdit(self)
+        self.lineEdit_2.setEchoMode(QtWidgets.QLineEdit.Password)
         self.lineEdit_2.setGeometry(QtCore.QRect(140, 260, 360, 60))
         self.lineEdit_2.setText("")
         self.lineEdit_2.setObjectName("lineEdit_2")
@@ -447,6 +451,7 @@ class AddNewUser(PageWindow):
 
 
         self.lineEdit = QtWidgets.QLineEdit(self)
+        self.lineEdit.setEchoMode(QtWidgets.QLineEdit.Password)
         self.lineEdit.setGeometry(QtCore.QRect(140, 230, 360, 40))
         self.lineEdit.setText("")
         self.lineEdit.setObjectName("lineEdit")
@@ -457,6 +462,7 @@ class AddNewUser(PageWindow):
 
         
         self.lineEdit_2 = QtWidgets.QLineEdit(self)
+        self.lineEdit_2.setEchoMode(QtWidgets.QLineEdit.Password)
         self.lineEdit_2.setGeometry(QtCore.QRect(140, 290, 360, 40))
         self.lineEdit_2.setText("")
         self.lineEdit_2.setObjectName("lineEdit_2")
