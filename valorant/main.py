@@ -388,28 +388,9 @@ class MainWindow(PageWindow):
        
     def login_valorant(self, creds):
 
-        print(creds)
-        username = creds[0]
-        password = creds[1]
-        riot_client_path = r"C:\Riot Games\Riot Client\RiotClientServices.exe"
-        app_window_title = "Riot Client Main"
-
-        # Start Riot Client
-        subprocess.Popen(r'""' + riot_client_path + '""')
-
-        # Wait for Riot Client window to become active
-        while True:
-            shell = com.Dispatch("WScript.Shell")
-            shell.AppActivate(app_window_title)
-            if shell.AppActivate(app_window_title):
-                break
-            time.sleep(1)
-
-        # Send username and password
-        shell.SendKeys(username)
-        shell.SendKeys("{TAB}")
-        shell.SendKeys(password)
-        shell.SendKeys("{ENTER}")
+        p = subprocess.Popen(["C:\\Users\\Swapnil Patil\\Downloads\\automations-main\\valorant\\automate.bat", creds[0], creds[1]], shell = True)
+        p.wait()
+        exit(0)
 
         
            
