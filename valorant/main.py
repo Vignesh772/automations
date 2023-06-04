@@ -392,7 +392,7 @@ class MainWindow(PageWindow):
        
     def login_valorant(self, creds):
 
-        p = subprocess.Popen(["C:\\Users\\Swapnil Patil\\Downloads\\automations-main\\valorant\\automate.bat", creds[0], creds[1]], shell = True)
+        p = subprocess.Popen(["automate.bat", creds[0], creds[1]], shell = True)
         p.wait()
         exit(0)
 
