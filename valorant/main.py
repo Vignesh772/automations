@@ -34,7 +34,6 @@ class LoginWindow(PageWindow):
         self.lineEdit.setGeometry(QtCore.QRect(140, 180, 360, 60))
         self.lineEdit.setText("")
         self.lineEdit.setObjectName("lineEdit")
-        self.lineEdit.textChanged.connect(self.disableButton)
         palette = QtGui.QPalette()
         palette.setColor(QtGui.QPalette.Text, QtCore.Qt.white)
         self.lineEdit.setPalette(palette)
@@ -65,7 +64,6 @@ class LoginWindow(PageWindow):
 "letter-spacing: 0.2em;\n"
 "text-align: left;\n"
 )
-        self.pushButton.setEnabled(False)
 
         # self.label = QtWidgets.QLabel(self)
         # self.label.setGeometry(QtCore.QRect(60, 150, 111, 20))
@@ -119,9 +117,7 @@ class LoginWindow(PageWindow):
    
 
 
-    def disableButton(self):
-        if len(self.lineEdit.text())>5:
-            self.pushButton.setEnabled(True)
+    
 
     def check_password(self):
         password = self.lineEdit.text()
@@ -164,7 +160,6 @@ class ConfigureWindow(PageWindow):
         self.lineEdit.setPalette(palette)
         self.lineEdit.setFont(font)
         self.lineEdit.setPlaceholderText(" MASTER PASSWORD") 
-        self.lineEdit.textChanged.connect(self.disableButton)
 
         self.lineEdit_2 = QtWidgets.QLineEdit(self)
         self.lineEdit_2.setEchoMode(QtWidgets.QLineEdit.Password)
@@ -174,7 +169,6 @@ class ConfigureWindow(PageWindow):
         self.lineEdit_2.setPalette(palette)
         self.lineEdit_2.setFont(font)
         self.lineEdit_2.setPlaceholderText(" RE-ENTER MASTER PASSWORD") 
-        self.lineEdit_2.textChanged.connect(self.disableButton)
 
 
         self.pushButton = QtWidgets.QPushButton(self)
@@ -196,7 +190,6 @@ class ConfigureWindow(PageWindow):
 "text-align: left;\n"
 )
 
-        self.pushButton.setEnabled(False)
 
 
 
@@ -242,7 +235,7 @@ class ConfigureWindow(PageWindow):
         self.msg = QtWidgets.QMessageBox()
         self.msg.setIcon(QtWidgets.QMessageBox.Critical)
         self.msg.setText("Error")
-        self.msg.setInformativeText('Passwords do not match')
+        
         self.msg.setWindowTitle("Error")
         
 
@@ -250,14 +243,17 @@ class ConfigureWindow(PageWindow):
    
 
 
-    def disableButton(self):
-        if len(self.lineEdit.text())>5 and len(self.lineEdit_2.text())>5:
-            self.pushButton.setEnabled(True)
+    
 
     def configure(self):
         
         if self.lineEdit.text() != self.lineEdit_2.text():
+            self.msg.setInformativeText('Passwords do not match')
             self.msg.exec_()
+            return
+        if len(self.lineEdit.text()) < 7:
+            self.msg.setInformativeText('Passwords must be mimum 7 characters')
+            self.mesg.exec_()
             return
         config.make(self.lineEdit.text())
 
@@ -413,6 +409,12 @@ class AddNewUser(PageWindow):
         self.UiComponents()
 
     def add_entry(self):
+        if len(self.lineEdit.text())==0 or len(self.lineEdit_1.text())==0 or len(self.lineEdit_2.text())==0:
+            self.msg.setInformativeText("Please fill all fields")
+            self.msg.exec_()
+            return
+
+
         if self.lineEdit.text() != self.lineEdit_2.text():
             self.msg.setInformativeText("Passwords do not match")
             self.msg.exec_()
@@ -429,9 +431,7 @@ class AddNewUser(PageWindow):
 
     def go_back(self):
         self.goto("main")
-    def disableButton(self):
-        if len(self.lineEdit.text()) and len(self.lineEdit_2.text()) and len(self.lineEdit_1.text()) :
-            self.pushButton.setEnabled(True)
+    
 
     def UiComponents(self):
         palette = QtGui.QPalette()
@@ -444,7 +444,6 @@ class AddNewUser(PageWindow):
         self.lineEdit_1.setGeometry(QtCore.QRect(140, 170, 360, 40))
         self.lineEdit_1.setText("")
         self.lineEdit_1.setObjectName("lineEdit")
-        self.lineEdit_1.textChanged.connect(self.disableButton)
         self.lineEdit_1.setPalette(palette)
         self.lineEdit_1.setFont(font)
         self.lineEdit_1.setPlaceholderText(" USER NAME") 
@@ -455,7 +454,6 @@ class AddNewUser(PageWindow):
         self.lineEdit.setGeometry(QtCore.QRect(140, 230, 360, 40))
         self.lineEdit.setText("")
         self.lineEdit.setObjectName("lineEdit")
-        self.lineEdit.textChanged.connect(self.disableButton)
         self.lineEdit.setPalette(palette)
         self.lineEdit.setFont(font)
         self.lineEdit.setPlaceholderText(" PASSWORD") 
@@ -466,7 +464,6 @@ class AddNewUser(PageWindow):
         self.lineEdit_2.setGeometry(QtCore.QRect(140, 290, 360, 40))
         self.lineEdit_2.setText("")
         self.lineEdit_2.setObjectName("lineEdit_2")
-        self.lineEdit_2.textChanged.connect(self.disableButton)
         self.lineEdit_2.setPalette(palette)
         self.lineEdit_2.setFont(font)
         self.lineEdit_2.setPlaceholderText(" RE ENTER PASSWORD") 
@@ -491,14 +488,12 @@ class AddNewUser(PageWindow):
 "letter-spacing: 0.2em;\n"
 "text-align: left;\n"
 )
-        self.pushButton.setEnabled(False)
 
 
         self.pushButton_1 = QtWidgets.QPushButton(self)
         self.pushButton_1.setGeometry(QtCore.QRect(140, 410, 360, 40))
         self.pushButton_1.setObjectName("pushButton")
         self.pushButton_1.setText("    BACK")
-        self.pushButton_1.setEnabled(True)
         btn_font = QtGui.QFont("Impact")
         btn_font.setPointSize(12)
         btn_font.setWeight(400)
