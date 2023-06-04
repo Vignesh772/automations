@@ -21,7 +21,7 @@ class LoginWindow(PageWindow):
     def __init__(self):
         super().__init__()
         self.initUI()
-        self.setWindowTitle("LogInWindow")
+        self.setWindowTitle("Valorant Account Launcher")
 
     def initUI(self):
         self.UiComponents()
@@ -111,6 +111,8 @@ class LoginWindow(PageWindow):
         self.msg.setText("Error")
         self.msg.setInformativeText('Invalid Password. Please Try Again.')
         self.msg.setWindowTitle("Error")
+        self.msg.setStyleSheet("color:white;background:#0F1923")
+
         
 
         self.pushButton.clicked.connect(self.check_password)
@@ -139,7 +141,7 @@ class ConfigureWindow(PageWindow):
     def __init__(self):
         super().__init__()
         self.initUI()
-        self.setWindowTitle("SingnUpWindow")
+        self.setWindowTitle("Valorant Account Launcher")
 
     def initUI(self):
         self.UiComponents()
@@ -237,6 +239,8 @@ class ConfigureWindow(PageWindow):
         self.msg.setText("Error")
         
         self.msg.setWindowTitle("Error")
+        self.msg.setStyleSheet("color:white;background:#0F1923")
+
         
 
         self.pushButton.clicked.connect(self.configure)
@@ -280,7 +284,7 @@ class MainWindow(PageWindow):
         self.goto("add")
     def initUI(self):
 
-        self.setWindowTitle("Valorant Launcher")
+        self.setWindowTitle("Valorant Account Launcher")
         self.UiComponents()
     def UiComponents(self):
         if config.checkConfig():
@@ -405,7 +409,7 @@ class AddNewUser(PageWindow):
         self.initUI()
 
     def initUI(self):
-        self.setWindowTitle("Valorant Launcher")
+        self.setWindowTitle("Valorant Account Launcher")
         self.UiComponents()
 
     def add_entry(self):
@@ -549,12 +553,16 @@ class AddNewUser(PageWindow):
         self.msg.setText("Error")
         self.msg.setInformativeText('Passwords do not match')
         self.msg.setWindowTitle("Error")
+        self.msg.setStyleSheet("color:white;background:#0F1923")
+
 
         self.msg_1 = QtWidgets.QMessageBox()
         self.msg_1.setIcon(QtWidgets.QMessageBox.Information)
         self.msg_1.setText("Success")
         self.msg_1.setInformativeText('Account Added')
         self.msg_1.setWindowTitle("Done")
+        self.msg_1.setStyleSheet("color:white;background:#0F1923")
+
         
 
         self.pushButton.clicked.connect(self.add_entry)
