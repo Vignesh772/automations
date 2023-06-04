@@ -219,7 +219,7 @@ class ConfigureWindow(PageWindow):
         self.label_4 = QtWidgets.QLabel(self)
         self.label_4.setGeometry(QtCore.QRect(140, 135, 440, 20))
         self.label_4.setObjectName("label_4")
-        self.label_4.setText("Set Master Password, the only password you need to remeber")
+        self.label_4.setText("Set Master Password, the only password you need to remeber.")
         self.label_4.setStyleSheet("position: absolute;\n"
 "font-family: \'Epilogue\';\n"
 "font-style: normal;\n"
@@ -231,6 +231,7 @@ class ConfigureWindow(PageWindow):
 "\n"
 "color: #C7F459;\n"
 "")
+
 
 
 
@@ -248,9 +249,59 @@ class ConfigureWindow(PageWindow):
    
 
 
-    
+    def place_automate_file(self):
+        content = '''set "username=%1"
+set "password=%2"
+        
+:start
+start "" "C:\\Riot Games\\Riot Client\\RiotClientServices.exe"
+set "appWindowTitle=Riot Client Main"
+:LOOP
+timeout /t 1 >nul
+powershell -command "$appWindow = (new-object -com wscript.shell).AppActivate('%appWindowTitle%'); if ($appWindow) { exit 0 } else { exit 1 }"
+if %errorlevel% equ 1 (
+    goto :LOOP
+) else (
+    powershell -command "(new-object -com wscript.shell).SendKeys('%username%')"
+    powershell -command "(new-object -com wscript.shell).SendKeys('{TAB}')"
+    powershell -command "(new-object -com wscript.shell).SendKeys('%password%')"
+    powershell -command "(new-object -com wscript.shell).SendKeys('{ENTER}')"
+)
+set "appWindowTitle=Riot Client Main"
+timeout /t 1 >nul
+powershell -command "$appWindow = (new-object -com wscript.shell).AppActivate('%appWindowTitle%'); if ($appWindow) { exit 0 } else { exit 1 }"
+if %errorlevel% equ 1 (
+    goto :LOOP
+) else (
+      powershell -command "(new-object -com wscript.shell).SendKeys('{TAB}')"
+      powershell -command "(new-object -com wscript.shell).SendKeys('{TAB}')"
+      powershell -command "(new-object -com wscript.shell).SendKeys('{TAB}')"
+      powershell -command "(new-object -com wscript.shell).SendKeys('{TAB}')"
+      powershell -command "(new-object -com wscript.shell).SendKeys('{TAB}')"
+      powershell -command "(new-object -com wscript.shell).SendKeys('{ENTER}')"
+)
+powershell -command "(new-object -com wscript.shell).SendKeys('{TAB}')"
+powershell -command "(new-object -com wscript.shell).SendKeys('{TAB}')"
+powershell -command "(new-object -com wscript.shell).SendKeys('{TAB}')"
+powershell -command "(new-object -com wscript.shell).SendKeys('{TAB}')"
+powershell -command "(new-object -com wscript.shell).SendKeys('{TAB}')"
+powershell -command "(new-object -com wscript.shell).SendKeys('{ENTER}')"
+'''
+        if not os.path.exists("C:\\RiotLauncher\\"):
+            print("h3")
+            os.mkdir("C:\\RiotLauncher")
+
+        try:
+            print("h4")
+            with open("C:\\RiotLauncher\\automate.bat", 'w+') as file_pointer:
+                file_pointer.write(content)
+        except Exception as e:
+            print(e)
+            pass
+
 
     def configure(self):
+
         
         if self.lineEdit.text() != self.lineEdit_2.text():
             self.msg.setInformativeText('Passwords do not match')
@@ -260,7 +311,9 @@ class ConfigureWindow(PageWindow):
             self.msg.setInformativeText('Passwords must be mimum 7 characters')
             self.mesg.exec_()
             return
+
         config.make(self.lineEdit.text())
+        self.place_automate_file()
 
 
         
@@ -296,7 +349,7 @@ class MainWindow(PageWindow):
         self.label = QtWidgets.QLabel(self)
         self.label.setFixedSize(290, 20)
         self.label.setObjectName("label")
-        self.label.setText("Click on the user to login into Valorant.")
+        self.label.setText("Click on the userID to login into Valorant.")
         self.label.setStyleSheet("position: absolute;\n"
 "font-family: \'Epilogue\';\n"
 "font-style: normal;\n"
@@ -392,9 +445,11 @@ class MainWindow(PageWindow):
         
        
     def login_valorant(self, creds):
-
-        p = subprocess.Popen(["automate.bat", creds[0], creds[1]], shell = True)
+        
+        p = subprocess.Popen(["C:\\RiotLauncher\\automate.bat", creds[0], creds[1]], shell=True)
+        o = p.communicate()
         p.wait()
+       
         exit(0)
 
         
@@ -431,7 +486,12 @@ class AddNewUser(PageWindow):
             return
         else:
             self.msg_1.exec_()
+            self.lineEdit_1.setText("")
+            self.lineEdit_2.setText("")
+            self.lineEdit.setText("")
             return
+
+
 
 
     def go_back(self):

@@ -8,11 +8,10 @@ def dbconfig():
     #   user ="pm",
     #   passwd ="password"
     # )
-    try:
-      os.mkdir("C:\\RiotLaucher")
-    except Exception as e:
-      pass
-    db = sqlite3.connect('C:\\RiotLaucher\\database.db')
+    if not os.path.exists("C:\\RiotLauncher"):
+        os.mkdir("C:\\RiotLauncher")
+
+    db = sqlite3.connect('C:\\RiotLauncher\\database.db')
     
     # printc("[green][+][/green] Connected to db")
   except Exception as e:

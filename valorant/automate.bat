@@ -1,4 +1,3 @@
-@echo off 
 set "username=%1"
 set "password=%2"
         
