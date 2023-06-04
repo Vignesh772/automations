@@ -11,6 +11,8 @@ import random
 import time
 import subprocess
 from utils import dbconfig as dbc
+basedir = os.path.dirname(__file__)
+
 class PageWindow(QtWidgets.QMainWindow):
     gotoSignal = QtCore.pyqtSignal(str)
 
@@ -578,7 +580,7 @@ class Window(QtWidgets.QMainWindow):
             self.f=1
         
         super().__init__(parent)
-        self.setWindowIcon(QtGui.QIcon('logos/logo.png'))
+        self.setWindowIcon(QtGui.QIcon(os.path.join(basedir, 'logo.ico')))
         self.setFixedSize(640, 480)
         self.setStyleSheet("background: #0F1923;\n""")
 
