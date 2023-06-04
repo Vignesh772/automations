@@ -579,6 +579,7 @@ class Window(QtWidgets.QMainWindow):
             self.f=1
         
         super().__init__(parent)
+        self.setWindowIcon(QtGui.QIcon('logos/logo.png'))
         self.setFixedSize(640, 480)
         self.setStyleSheet("background: #0F1923;\n""")
 
