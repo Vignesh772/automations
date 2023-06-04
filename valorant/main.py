@@ -10,7 +10,6 @@ import sqlite3
 import random 
 import time
 import subprocess
-import win32com.client as com
 from utils import dbconfig as dbc
 class PageWindow(QtWidgets.QMainWindow):
     gotoSignal = QtCore.pyqtSignal(str)
