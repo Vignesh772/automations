@@ -5,7 +5,7 @@ from csv import writer
 
 import sms
 
-if __name__ == "__main__:
+if __name__ == "__main__":
     L = instaloader.Instaloader()
 
 
